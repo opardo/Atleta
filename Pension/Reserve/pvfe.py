@@ -2,22 +2,22 @@ import pandas as pd
 import numpy as np
 import operator
 
-df = pd.read_csv("./Data/Mortality.csv")
+from ..Data.parameters import i, g, init_age, final_age
+
+df = pd.read_csv("Pension/Data/Mortality.csv")
 df['px'] = 1 - df['qx']
-parameters = {
-    'df': df,
-    'i': 0.035,
-    'c': 0.025,
-    'init_age': 26,
-    'final_age': 100,
-}
 
 
 class PresentValueFutureExpenses(object):
 
     @classmethod
-    def get_pvfe_dictionary(cls, parameters):
-        (df, i, c, init_age, final_age) = cls.validate_parameters(**parameters)
+    def get_pvfe_dictionary(cls,
+                            df=df,
+                            i=i,
+                            c=g,
+                            init_age=init_age,
+                            final_age=final_age):
+
         pvfe_dictionary = {}
         for age in range(init_age, final_age + 1):
             pvfe_dictionary[age] = cls.get_pvfe_for_specific_age(df, age, i, c)
@@ -26,10 +26,7 @@ class PresentValueFutureExpenses(object):
     @classmethod
     def get_pvfe_for_specific_age(cls, df, age, i, c):
         df = cls.get_future_information_table_for_specific_retiring_age(df, age, i, c)
-        pvfe = 0
-        for k in range(0, len(df)):
-            pvfe += df['npx'][k] * df['v_n'][k]
-        return(pvfe)
+        return((df['npx'] * df['v_n']).sum())
 
     @classmethod
     def get_future_information_table_for_specific_retiring_age(cls, df, age, i, c):
@@ -68,10 +65,6 @@ class PresentValueFutureExpenses(object):
             v_n.append(((1 + c) / (1 + i)) ** float(k))
         df['v_n'] = v_n
         return(df)
-
-    @staticmethod
-    def validate_parameters(df, i, c, init_age, final_age):
-        return (df, i, c, init_age, final_age)
 
     @staticmethod
     def product(iterable):

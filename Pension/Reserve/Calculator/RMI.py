@@ -2,41 +2,14 @@ import pandas as pd
 import numpy as np
 
 from ...Data.pvfe import base_pvfe
-from ...Data.parameters import invalidity_alpha, qi_x, g
-from ...Data.test import active_group, invalid_group
+from ...Data.parameters import invalidity_alpha, g
+from ...Data.test import invalid_group
 
 
-class RBAI(object):
+class RMI(object):
 
     @classmethod
     def get_group_BEL(
-            cls,
-            active_group=active_group,
-            invalid_group=invalid_group,
-            invalidity_alpha=invalidity_alpha,
-            qi_x=qi_x,
-            g=g,
-            pvfe=base_pvfe):
-
-        not_invalid_BEL = cls.get_not_invalid_BEL(active_group, invalidity_alpha, qi_x, pvfe)
-        invalid_BEL = cls.get_invalid_BEL(invalid_group, invalidity_alpha, g)
-
-        return(not_invalid_BEL + invalid_BEL)
-
-    @classmethod
-    def get_not_invalid_BEL(
-            cls,
-            active_group=active_group,
-            invalidity_alpha=invalidity_alpha,
-            qi_x=qi_x,
-            pvfe=base_pvfe):
-
-        active_group = cls.add_pvfe_column(active_group, pvfe)
-
-        return(qi_x * invalidity_alpha * (active_group['salary'] * active_group['pvfe']).sum())
-
-    @classmethod
-    def get_invalid_BEL(
             cls,
             invalid_group=invalid_group,
             invalidity_alpha=invalidity_alpha,

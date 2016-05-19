@@ -6,7 +6,7 @@ from ...Data.parameters import g
 from ...Data.test import retired_group
 
 
-class RRC(object):
+class RMR(object):
 
     @classmethod
     def get_group_BEL(
