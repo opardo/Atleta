@@ -24,4 +24,11 @@ retired_group = pd.DataFrame({
     'payment': [50, 100, 125, 150],
 })
 
+# Investment Policy
+year = 0
+Ay = 1000
+O = 100 * np.ones(73)
+D = 80 * np.ones(73)
+R0 = 50
+
 
