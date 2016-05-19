@@ -20,14 +20,23 @@ class RetiredInvestmentPolicy(object):
                               D=D,
                               R0=R0,
                               Forward=Forward):
-
         c = cls.__get_c(year, Forward)
         b = cls.__get_b(year, Ay, O, D, R0, Forward)
         A = cls.__get_A(year, Forward)
+        sol = cls.solve_lp_problem(c, A, b)
+        iv = cls.clean_iv_vector(sol)
+        return(iv)
+
+    @staticmethod
+    def solve_lp_problem(c, A, b):
         Q = matrix(np.zeros((146, 146)))
         G = matrix(-np.eye(146))
         h = matrix(np.zeros(146))
         sol = solvers.qp(Q, c, G, h, A, b)
+        return(sol)
+
+    @staticmethod
+    def clean_iv_vector(sol):
         x = sol['x']
         x = x[0:73]
         iv = []
@@ -45,15 +54,6 @@ class RetiredInvestmentPolicy(object):
         return(matrix(-c))
 
     @staticmethod
-    def __get_b(year, Ay, O, D, R0, Forward):
-        b = np.zeros(74)
-        b[0] = O[0] - D[0] + R0 * (1 + Forward[year][1])
-        for k in range(1, 73):
-            b[k] = O[k] - D[k]
-        b[73] = Ay
-        return(matrix(b))
-
-    @staticmethod
     def __get_A(year, Forward):
         A = np.zeros((73, 146))
         A[0, 0] = (1 + Forward[year][1])
@@ -65,3 +65,12 @@ class RetiredInvestmentPolicy(object):
         A74 = np.array(73 * [1] + 73 * [0])
         A = np.vstack((A, A74))
         return(matrix(A))
+
+    @staticmethod
+    def __get_b(year, Ay, O, D, R0, Forward):
+        b = np.zeros(74)
+        b[0] = O[0] - D[0] + R0 * (1 + Forward[year][1])
+        for k in range(1, 73):
+            b[k] = O[k] - D[k]
+        b[73] = Ay
+        return(matrix(b))
