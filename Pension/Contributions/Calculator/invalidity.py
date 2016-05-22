@@ -31,9 +31,8 @@ class InvalidityContributionCalculator(object):
             active_group=active_group,
             qi_x=qi_x,
             invalidity_alpha=invalidity_alpha):
-
         active_group['invalidity_contribution'] = qi_x * invalidity_alpha * active_group['salary'] * cls.pvfe_column(active_group)
-
+        active_group.loc[active_group['age'] < 26, 'invalidity_contribution'] = 0
         return(active_group)
 
     @classmethod

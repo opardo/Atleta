@@ -45,6 +45,7 @@ class IAContributionCalculator(object):
     @staticmethod
     def update_last_IA_contribution(active_group, IA_alpha):
         active_group['IA_contribution'] = IA_alpha * active_group['salary']
+        active_group.loc[active_group['age'] < 26,'IA_contribution'] = 0
         return(active_group)
 
     @staticmethod

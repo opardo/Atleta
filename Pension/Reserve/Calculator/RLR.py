@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 
+from ...Data.parameters import promised_yield
 from ...Data.retiring_probabilities import base_retiring
 from ...Data.test import active_group
 

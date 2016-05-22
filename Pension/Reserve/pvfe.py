@@ -4,7 +4,7 @@ import operator
 
 from ..Data.parameters import i, g, init_age, final_age
 
-df = pd.read_csv("Pension/Data/Mortality.csv")
+df = pd.read_csv("Pension/Data/CSV/Mortality.csv")
 df['px'] = 1 - df['qx']
 
 
