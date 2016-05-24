@@ -67,7 +67,7 @@ class RetiredInvestmentPolicy(object):
     @staticmethod
     def __get_b(year, Ay, O, D, R0, Forward):
         b = np.zeros(74)
-        b[0] = O[0] - D[0] + R0 * (1 + Forward[year][1])
+        b[0] = O[0] - D[0] + (0.8) * R0 * (1 + Forward[year][1])
         for k in range(1, 73):
             b[k] = O[k] - D[k]
         b[73] = Ay

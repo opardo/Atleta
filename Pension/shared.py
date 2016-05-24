@@ -36,3 +36,4 @@ def delta(table, base_column, new_column):
         col.append(table[base_column][k] - table[base_column][k - 1])
     table[new_column] = col
     table.loc[table['Year'] == 0, new_column] = 0
+    return(table)
