@@ -28,3 +28,11 @@ def add_tPx_column(group, tPx_dict=base_tPx):
 
 def get_tPx_for_specific_age(age, tPx_dict):
     return(np.array(tPx_dict[age]))
+
+
+def delta(table, base_column, new_column):
+    col = [0]
+    for k in range(1, len(table)):
+        col.append(table[base_column][k] - table[base_column][k - 1])
+    table[new_column] = col
+    table.loc[table['Year'] == 0, new_column] = 0

@@ -14,7 +14,7 @@ from ..Reserve.Calculator.RRCI import *
 from ..Investment.Calculator.retired_policy import *
 
 # from Pension.Simulations.simulate import *
-# Simulate.simulate_one_setting('base_simulated_table.csv')
+# Simulate.simulate_one_setting('mortality_stressed_simulated_table.csv')
 
 
 class Simulate(object):
@@ -42,6 +42,16 @@ class Simulate(object):
                 table = table.append(life_table)
             except:
                 pass
+        table = table.to_csv(table_name)
+        table['NumPartRet'] = table['NumPartMuertos'] + table['NumPartInv'] + table['NumPartVol']
+        table['R0Inv*0.2'] = 0.2 * table['R0Inv']
+        table['R0Ret*0.2'] = 0.2 * table['R0Ret']
+        table['CSInv'] = table['CRNInv'] + table['CPInv']
+        table['CSRet'] = table['CRNRet'] + table['CPRet']
+        table = delta(table, 'VLR', 'DeltaVLR')
+        table = delta(table, 'VMI', 'DeltaVMI')
+        table = delta(table, 'VMR', 'DeltaVMR')
+        table = delta(table, 'VRCI', 'DeltaVRCI')
         table = table.to_csv(table_name)
 
     @classmethod
