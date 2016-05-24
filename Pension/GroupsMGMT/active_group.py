@@ -84,6 +84,7 @@ class UpdateActiveGroup(object):
                                qi_x=qi_x,
                                retiring=base_retiring):
         active_group['age'] = active_group['age'] + 1
+        active_group.age = active_group.age.astype(int)
         active_group['salary'] = (1.06) * active_group['salary']
         active_group = cls.simulate_new_players(active_group, last_ID, year)
         active_group = add_pvfe_column(active_group)
@@ -96,7 +97,7 @@ class UpdateActiveGroup(object):
         new_players_len = players_number - len(active_group)
         index = range(0, new_players_len)
         new_players = pd.DataFrame(index=index, columns=columns)
-        new_players['id'] = range(last_ID + 1, last_ID + 1 + new_players_len)
+        new_players['id'] = range(int(last_ID) + 1, int(last_ID) + 1 + new_players_len)
         new_players['age'] = new_players_len * [22]
         new_players['salary'] = loc * (1 + float(sg)) ** year + np.random.gamma(shape, scale, new_players_len)
         new_players['IA'] = new_players_len * [0]

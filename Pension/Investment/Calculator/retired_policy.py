@@ -48,7 +48,7 @@ class RetiredInvestmentPolicy(object):
             c[73 + k] = (1 + Forward[year][k + 1]) ** -(k + 1)
         c = 0.2 * c
         c[145] = 0
-        c[146] = -1000000.00
+        c[146] = -10000000000.00
         return(matrix(-c))
 
     @staticmethod

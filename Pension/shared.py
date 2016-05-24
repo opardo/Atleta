@@ -18,7 +18,7 @@ def add_qx_column(group, qx_dict):
 
 
 def get_qx_for_specific_age(age, qx_dict):
-    return(qx_dict[str(age)])
+    return(float(qx_dict[str(int(age))]))
 
 
 def add_tPx_column(group, tPx_dict=base_tPx):

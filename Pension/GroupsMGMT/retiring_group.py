@@ -102,16 +102,14 @@ class RetiringReason(object):
             retiring_group,
             retiring_reasons_probabilities
         )
-        print retiring_group
         if retiring_group.empty:
-            volunteer_group = retiring_group[retiring_group['retiring_reason']=='v']
-            death_group = retiring_group[retiring_group['retiring_reason']=='d']
-            invalid_group = retiring_group[retiring_group['retiring_reason']=='i']
-        else:
             volunteer_group = retiring_group
             death_group = retiring_group
             invalid_group = retiring_group
-
+        else:
+            volunteer_group = retiring_group[retiring_group['retiring_reason']=='v']
+            death_group = retiring_group[retiring_group['retiring_reason']=='d']
+            invalid_group = retiring_group[retiring_group['retiring_reason']=='i']
         return(
             volunteer_group.drop('retiring_reason', 1),
             death_group.drop('retiring_reason', 1),

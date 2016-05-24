@@ -25,4 +25,4 @@ class RLR(object):
 
     @staticmethod
     def get_qx(age, retiring):
-        return(float(retiring[str(age)]))
+        return(float(retiring[str(int(age))]))

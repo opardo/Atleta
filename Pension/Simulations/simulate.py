@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import time
+import pickle
 
 from ..Data.df_parameters import *
 from ..Data.parameters import *
@@ -13,27 +13,57 @@ from ..Reserve.Calculator.RMR import *
 from ..Reserve.Calculator.RRCI import *
 from ..Investment.Calculator.retired_policy import *
 
-from ..Data.test import *
+# from Pension.Simulations.simulate import *
+# Simulate.simulate_one_setting('base_simulated_table.csv')
 
 
 class Simulate(object):
 
     @classmethod
-    def simulate_one_life(
+    def simulate_one_setting(
         cls,
-        life=1,
+        table_name,
         retiring=base_retiring,
         mortality=base_mortality,
         retiring_reasons_probabilities=base_retiring_reasons_probabilities,
         qi_x=qi_x,
-        active_group=active_group,
-        retired_group=retired_group
     ):
-        table = pd.DataFrame(index=index, columns=columns)
+        table = pd.DataFrame(index=[], columns=columns)
+        for life in range(1, 501):
+            print 'LIFE: ' + str(life)
+            try:
+                life_table = cls.simulate_one_life(
+                    life,
+                    retiring,
+                    mortality,
+                    retiring_reasons_probabilities,
+                    qi_x,
+                )
+                table = table.append(life_table)
+            except:
+                pass
+        table = table.to_csv(table_name)
+
+    @classmethod
+    def simulate_one_life(
+        cls,
+        life,
+        retiring,
+        mortality,
+        retiring_reasons_probabilities,
+        qi_x,
+    ):
+        table = pd.DataFrame(index=[], columns=columns)
         last_ID = 0
         D_IA = None
         D_inv = None
-        for year in range(0, 71):
+        active_group = pickle.load(
+            open("./Pension/Data/active_group.pickle", "rb")
+        )
+        retired_group = pickle.load(
+            open("./Pension/Data/retired_group.pickle", "rb")
+        )
+        for year in range(0, 51):
             (
                 year_table,
                 active_group,
@@ -55,26 +85,17 @@ class Simulate(object):
                 qi_x
             )
             table = table.append(year_table)
-        table = table.to_csv('table.csv')
-        return(
-            table,
-            year_table,
-            active_group,
-            retired_group,
-            D_IA,
-            D_inv,
-            last_ID,
-        )
+        return(table)
 
     @staticmethod
     def simulate_one_year(
-        life=life,
-        year=year,
-        active_group=active_group,
-        retired_group=retired_group,
-        D_IA=None,
-        D_inv=None,
-        last_ID=last_ID,
+        life,
+        year,
+        active_group,
+        retired_group,
+        D_IA,
+        D_inv,
+        last_ID,
         retiring=base_retiring,
         mortality=base_mortality,
         retiring_reasons_probabilities=base_retiring_reasons_probabilities,
