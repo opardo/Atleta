@@ -12,6 +12,7 @@ from ..Reserve.Calculator.RMI import *
 from ..Reserve.Calculator.RMR import *
 from ..Reserve.Calculator.RRCI import *
 from ..Investment.Calculator.retired_policy import *
+from ..shared import delta
 
 # from Pension.Simulations.simulate import *
 # Simulate.simulate_one_setting('mortality_stressed_simulated_table.csv')
