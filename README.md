@@ -1,7 +1,22 @@
 # Atleta
 
-Código utilizado para el proyecto final de la materia Práctica Actuarial y Marco Institucional, impartida en el Instituto Tecnológico Autónomo de México, durante el semestre Primavera 2016. 
+## Overview
 
-El proyecto fue realizado enteramente en el lenguaje de programación Python.
+Python project for the Práctica Actuarial y Marco Institucional (Standards of Actuarial Practice) class, offered by Mexico Autonomous Institute of Technology (ITAM) in the Spring 2016 semester.
 
-El contenido esencial del proyecto es la hipotética creación de un programa de pensiones, dirigido a los jugadores de la NFL. El motivo del código es la simulación de distintos escenarios, con el fin de observar los efectos que podrían tener alteraciones de distintas variables en las finanzas de nuestra empresa, en el corto, mediano y largo plazo.
+Considers a hypothetical retirement plan for NFL players. The code performs multiple simulations to measure the uncertainty obtained after stressing variables that we know are volatile. These simulations will allow our team to estimate financial projections in the short, medium and long term.
+
+## Requirements
+
+python: 2.7.14,
+pandas: 0.18.1,
+numpy: 1.14.0,
+cvxopt: 1.1.8
+
+## Code
+
+The code is organized in different classes. To perform the simulations you have to run the following code in a Python console:
+```
+from Pension.Simulations.simulate import *
+Simulate.simulate_one_setting('mortality_stressed_simulated_table.csv')
+```
