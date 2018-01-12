@@ -2,9 +2,9 @@
 
 ## Overview
 
-Python project for the Práctica Actuarial y Marco Institucional (Standards of Actuarial Practice) class, offered by Mexico Autonomous Institute of Technology (ITAM) in the Spring 2016 semester.
+Python project for the Práctica Actuarial y Marco Institucional (Standards of Actuarial Practice) class, offered by the Mexico Autonomous Institute of Technology (ITAM) in the Spring 2016 semester.
 
-Considers a hypothetical retirement plan for NFL players. The code performs multiple simulations to measure the uncertainty obtained after stressing variables that we know are volatile. These simulations will allow our team to estimate financial projections in the short, medium and long term.
+It considers a hypothetical retirement plan for NFL players. The code performs multiple simulations to measure the uncertainty obtained after stressing variables that we know are volatile. These simulations will allow our team to estimate financial projections in the short, medium and long term.
 
 ## Requirements
 
